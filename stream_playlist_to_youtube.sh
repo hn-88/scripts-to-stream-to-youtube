@@ -26,7 +26,7 @@ do
     #echo "Playlist item is $line "
     #read -p "Press Enter to continue" < /dev/tty
 
-  ffmpeg -hide_banner -loglevel error  \
+  ffmpeg -re -hide_banner -loglevel error  \
       -i "$(yt-dlp -g -f b  $line)" -deinterlace \
       -vcodec libx264 -pix_fmt yuv420p -preset $QUAL -r $FPS -g $(($FPS * 2)) -b:v $VBR \
       -acodec libmp3lame -ar 44100 -threads 6 -qscale 3 -b:a 712000 -bufsize 512k \
