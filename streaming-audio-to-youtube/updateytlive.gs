@@ -41,6 +41,156 @@ function checklivebroadcasts() {
     }
 }
 
+// https://stackoverflow.com/questions/29785294/check-if-current-time-is-between-two-given-times-in-javascript
+function getscheddatetimeAM(){
+  var startTime = '04:29:00';
+  var formatteddatetime = Utilities.formatDate(new Date(), "GMT", "yyyy-MM-dd'T'HH:mm:ss'Z'");
+  var scheddatetime = formatteddatetime.slice(0,11)+startTime;
+  //console.log(scheddatetime);
+  return scheddatetime;
+  
+}
+
+function getscheddatetimePM(){
+  var startTime = '16:29:00';
+  var formatteddatetime = Utilities.formatDate(new Date(), "GMT", "yyyy-MM-dd'T'HH:mm:ss'Z'");
+  var scheddatetime = formatteddatetime.slice(0,11)+startTime;
+  //console.log(scheddatetime);
+  return scheddatetime;
+  
+}
+
+// createbroadcastAM() and PM() will be different from createbroadcastyt() in only 2 ways:
+// the getscheddatetimeAM() or PM() call respectively, and the streamid used.
+
+function createbroadcastAM() {
+  try {
+    // Set up your broadcast
+    // from https://developers.google.com/youtube/v3/live/docs/liveBroadcasts#resource
+    
+    const lbrresource = 
+    {
+  "kind": "youtube#liveBroadcast",
+  "snippet": {
+    "channelId": 'UCddXv1Y0arlYPbr0ahRYsBw',
+    "title": 'API test AM '+getscheddatetimeAM(),
+    "description": 'The morning session of TeluguStream, 4:30 am to 4:30 pm.',
+    "thumbnails": {
+      "default": {
+        "url": "https://i.ytimg.com/vi/sDcbL973Ndw/hqdefault.jpg",
+        "width": 366,
+        "height": 275
+      }
+    },
+    "scheduledStartTime": getscheddatetimeAM()
+    //"scheduledEndTime": '2024-03-12T14:00:00.0Z'
+    
+  },
+  "status": {
+    "privacyStatus": "public",
+    "selfDeclaredMadeForKids": "false"
+  },
+  "contentDetails": {   
+    "enableEmbed": true,
+    "enableDvr": true,
+    "recordFromStart": true,
+    "enableAutoStart": true,
+    "enableAutoStop": true
+  }
+  
+  }
+
+    const brInsertresults = YouTube.LiveBroadcasts.insert(lbrresource,'snippet,contentDetails,status');
+    console.log('Insert Broadcast Results:');
+    console.log(brInsertresults);
+    brId = brInsertresults.id;
+
+
+//     const strInsertresults = YouTube.LiveStreams.insert(livestreamres,'id,snippet,cdn,content_details,status');
+// We're going to reuse an existing streamId.
+
+// bind
+bindresult = YouTube.LiveBroadcasts.bind(brId,'snippet,status',{"streamId":'ddXv1Y0arlYPbr0ahRYsBw1710082827760667'});
+// pm is ddXv1Y0arlYPbr0ahRYsBw1648295061824434
+console.log('Bind results:');
+console.log(bindresult);
+// start transmitting video
+
+    
+
+    // Test (omitted, since auto-start is enabled)
+
+    // Broadcast (should start immediately, due to auto-start)
+    // Conclude your broadcast (by killing ffmpeg)
+    
+
+  } catch (err) {
+    // TODO (developer) - Handle exception
+    console.log('Failed with err %s', err.message);
+  }
+}
+
+function createbroadcastPM() {
+  try {
+    // Set up your broadcast
+    // from https://developers.google.com/youtube/v3/live/docs/liveBroadcasts#resource
+    
+    const lbrresource = 
+    {
+  "kind": "youtube#liveBroadcast",
+  "snippet": {
+    "channelId": 'UCddXv1Y0arlYPbr0ahRYsBw',
+    "title": 'API test PM '+getscheddatetimePM(),
+    "description": 'The evening session of TeluguStream, 4:30 pm to 4:30 am.',
+    "thumbnails": {
+      "default": {
+        "url": "https://i.ytimg.com/vi/sDcbL973Ndw/hqdefault.jpg",
+        "width": 366,
+        "height": 275
+      }
+    },
+    "scheduledStartTime": getscheddatetimePM()
+    //"scheduledEndTime": '2024-03-12T14:00:00.0Z'
+    
+  },
+  "status": {
+    "privacyStatus": "public",
+    "selfDeclaredMadeForKids": "false"
+  },
+  "contentDetails": {   
+    "enableEmbed": true,
+    "enableDvr": true,
+    "recordFromStart": true,
+    "enableAutoStart": true,
+    "enableAutoStop": true
+  }
+  
+  }
+
+    const brInsertresults = YouTube.LiveBroadcasts.insert(lbrresource,'snippet,contentDetails,status');
+    console.log('Insert Broadcast Results:');
+    console.log(brInsertresults);
+    brId = brInsertresults.id;
+
+
+//     const strInsertresults = YouTube.LiveStreams.insert(livestreamres,'id,snippet,cdn,content_details,status');
+// We're going to reuse an existing streamId.
+
+// bind
+bindresult = YouTube.LiveBroadcasts.bind(brId,'snippet,status',{"streamId":'ddXv1Y0arlYPbr0ahRYsBw1648295061824434'});
+// pm is ddXv1Y0arlYPbr0ahRYsBw1648295061824434
+// am is ddXv1Y0arlYPbr0ahRYsBw1710082827760667
+console.log('Bind results:');
+console.log(bindresult);
+// start transmitting video
+
+  } catch (err) {
+    // TODO (developer) - Handle exception
+    console.log('Failed with err %s', err.message);
+  }
+}
+
+
 // https://developers.google.com/youtube/v3/live/life-of-a-broadcast
 function createbroadcastyt() {
   try {
@@ -51,16 +201,16 @@ function createbroadcastyt() {
   "kind": "youtube#liveBroadcast",
   "snippet": {
     "channelId": 'UCddXv1Y0arlYPbr0ahRYsBw',
-    "title": 'API test1',
+    "title": 'API test2',
     "description": 'API test1 description',
-    // "thumbnails": {
-    //   (key): {
-    //     "url": string,
-    //     "width": unsigned integer,
-    //     "height": unsigned integer
-    //   }
-    // },
-    "scheduledStartTime": '2024-03-12T09:30:00.0Z',
+    "thumbnails": {
+      "default": {
+        "url": "https://i.ytimg.com/vi/sDcbL973Ndw/hqdefault.jpg",
+        "width": 366,
+        "height": 275
+      }
+    },
+    "scheduledStartTime": '2024-03-12T11:00:00.0Z',
     "scheduledEndTime": '2024-03-12T14:00:00.0Z'
     // "actualStartTime": datetime,
     // "actualEndTime": datetime,
