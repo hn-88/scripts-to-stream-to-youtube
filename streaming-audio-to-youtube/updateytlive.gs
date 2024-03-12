@@ -110,8 +110,8 @@ function createbroadcastAM() {
 // We're going to reuse an existing streamId.
 
 // bind
-bindresult = YouTube.LiveBroadcasts.bind(brId,'snippet,status',{"streamId":'ddXv1Y0arlYPbr0ahRYsBw1710082827760667'});
-// pm is ddXv1Y0arlYPbr0ahRYsBw1648295061824434
+bindresult = YouTube.LiveBroadcasts.bind(brId,'snippet,status',{"streamId":'id1'});
+// pm is id2
 console.log('Bind results:');
 console.log(bindresult);
 // start transmitting video
@@ -177,9 +177,9 @@ function createbroadcastPM() {
 // We're going to reuse an existing streamId.
 
 // bind
-bindresult = YouTube.LiveBroadcasts.bind(brId,'snippet,status',{"streamId":'ddXv1Y0arlYPbr0ahRYsBw1648295061824434'});
-// pm is ddXv1Y0arlYPbr0ahRYsBw1648295061824434
-// am is ddXv1Y0arlYPbr0ahRYsBw1710082827760667
+bindresult = YouTube.LiveBroadcasts.bind(brId,'snippet,status',{"streamId":'id2'});
+// pm is id2
+// am is id1
 console.log('Bind results:');
 console.log(bindresult);
 // start transmitting video
@@ -225,7 +225,7 @@ function createbroadcastyt() {
     "selfDeclaredMadeForKids": "false"
   },
   "contentDetails": {
-   // "boundStreamId": 'ddXv1Y0arlYPbr0ahRYsBw1710082827760667',
+   // "boundStreamId": 'id1',
     //"boundStreamLastUpdateTimeMs": datetime,
     //  "monitorStream": {
     //    "enableMonitorStream": false
@@ -310,7 +310,7 @@ function createbroadcastyt() {
 // We're going to reuse an existing streamId.
 
 // bind
-bindresult = YouTube.LiveBroadcasts.bind(brId,'snippet,status',{"streamId":'ddXv1Y0arlYPbr0ahRYsBw1710082827760667'});
+bindresult = YouTube.LiveBroadcasts.bind(brId,'snippet,status',{"streamId":'id1'});
 console.log('Bind results:');
 console.log(bindresult);
 // start transmitting video
@@ -331,8 +331,8 @@ console.log(bindresult);
 
 function bindbc() {
   try {
-    //result = YouTube.LiveBroadcasts.bind('aFv6gy2uS58','id,snippet,contentDetails,status','ddXv1Y0arlYPbr0ahRYsBw1710082827760667');
-    result = YouTube.LiveBroadcasts.bind('aFv6gy2uS58','snippet,status',{"streamId":'ddXv1Y0arlYPbr0ahRYsBw1710082827760667'});
+    //result = YouTube.LiveBroadcasts.bind('aFv6gy2uS58','id,snippet,contentDetails,status','id1');
+    result = YouTube.LiveBroadcasts.bind('aFv6gy2uS58','snippet,status',{"streamId":'id1'});
     console.log(result);
        
 
