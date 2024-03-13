@@ -43,16 +43,17 @@ function checklivebroadcasts() {
 
 // https://stackoverflow.com/questions/29785294/check-if-current-time-is-between-two-given-times-in-javascript
 function getscheddatetimeAM(){
-  var startTime = '04:29:00';
+  var startTime = '22:59:00'; // GMT = 4:29 am IST
   var formatteddatetime = Utilities.formatDate(new Date(), "GMT", "yyyy-MM-dd'T'HH:mm:ss'Z'");
+  console.log(formatteddatetime);
   var scheddatetime = formatteddatetime.slice(0,11)+startTime;
-  //console.log(scheddatetime);
+  console.log(scheddatetime);
   return scheddatetime;
   
 }
 
 function getscheddatetimePM(){
-  var startTime = '16:29:00';
+  var startTime = '10:59:00'; // GMT = 4:29 pm IST
   var formatteddatetime = Utilities.formatDate(new Date(), "GMT", "yyyy-MM-dd'T'HH:mm:ss'Z'");
   var scheddatetime = formatteddatetime.slice(0,11)+startTime;
   //console.log(scheddatetime);
@@ -60,10 +61,16 @@ function getscheddatetimePM(){
   
 }
 
-// createbroadcastAM() and PM() will be different from createbroadcastyt() in only 2 ways:
-// the getscheddatetimeAM() or PM() call respectively, and the streamid used.
+function getscheddatetimetesting(){
+  var startTime = '04:30:00'; // 5:00:00 GMT = 10:30 am IST
+  var formatteddatetime = Utilities.formatDate(new Date(), "GMT", "yyyy-MM-dd'T'HH:mm:ss'Z'");
+  var scheddatetime = formatteddatetime.slice(0,11)+startTime;
+  //console.log(scheddatetime);
+  return scheddatetime;
+  
+}
 
-function createbroadcastAM() {
+function createbroadcasttesting() {
   try {
     // Set up your broadcast
     // from https://developers.google.com/youtube/v3/live/docs/liveBroadcasts#resource
@@ -72,22 +79,22 @@ function createbroadcastAM() {
     {
   "kind": "youtube#liveBroadcast",
   "snippet": {
-    "channelId": 'UCddXv1Y0arlYPbr0ahRYsBw',
-    "title": 'API test AM '+getscheddatetimeAM(),
+    "channelId": 'theID0ahRYsBw',
+    "title": 'API test AM '+getscheddatetimetesting(),
     "description": 'The morning session of TeluguStream, 4:30 am to 4:30 pm.',
     "thumbnails": {
       "default": {
-        "url": "https://i.ytimg.com/vi/sDcbL973Ndw/hqdefault.jpg",
+        "url": "https://i.ytimg.com/vi/F92oOHwJTYo/hqdefault.jpg",
         "width": 366,
         "height": 275
       }
     },
-    "scheduledStartTime": getscheddatetimeAM()
+    "scheduledStartTime": getscheddatetimetesting()
     //"scheduledEndTime": '2024-03-12T14:00:00.0Z'
     
   },
   "status": {
-    "privacyStatus": "public",
+    "privacyStatus": "private",
     "selfDeclaredMadeForKids": "false"
   },
   "contentDetails": {   
@@ -110,8 +117,79 @@ function createbroadcastAM() {
 // We're going to reuse an existing streamId.
 
 // bind
-bindresult = YouTube.LiveBroadcasts.bind(brId,'snippet,status',{"streamId":'id1'});
-// pm is id2
+bindresult = YouTube.LiveBroadcasts.bind(brId,'snippet,status',{"streamId":'dthestreamid67'});
+// pm is ddXv1Y0arlYPbr0ahRYsBw1648295061824434
+console.log('Bind results:');
+console.log(bindresult);
+// start transmitting video
+
+    
+
+    // Test (omitted, since auto-start is enabled)
+
+    // Broadcast (should start immediately, due to auto-start)
+    // Conclude your broadcast (by killing ffmpeg)
+    
+
+  } catch (err) {
+    // TODO (developer) - Handle exception
+    console.log('Failed with err %s', err.message);
+  }
+}
+
+
+// createbroadcastAM() and PM() will be different from createbroadcastyt() in only 2 ways:
+// the getscheddatetimeAM() or PM() call respectively, and the streamid used.
+
+function createbroadcastAM() {
+  try {
+    // Set up your broadcast
+    // from https://developers.google.com/youtube/v3/live/docs/liveBroadcasts#resource
+    
+    const lbrresource = 
+    {
+  "kind": "youtube#liveBroadcast",
+  "snippet": {
+    "channelId": 'UCdthechannelidsBw',
+    "title": 'API test AM '+getscheddatetimeAM(),
+    "description": 'The morning session of TeluguStream, 4:30 am to 4:30 pm.',
+    "thumbnails": {
+      "default": {
+        "url": "https://i.ytimg.com/vi/F92oOHwJTYo/hqdefault.jpg",
+        "width": 366,
+        "height": 275
+      }
+    },
+    "scheduledStartTime": getscheddatetimeAM()
+    //"scheduledEndTime": '2024-03-12T14:00:00.0Z'
+    
+  },
+  "status": {
+    "privacyStatus": "private",
+    "selfDeclaredMadeForKids": "false"
+  },
+  "contentDetails": {   
+    "enableEmbed": true,
+    "enableDvr": true,
+    "recordFromStart": true,
+    "enableAutoStart": true,
+    "enableAutoStop": true
+  }
+  
+  }
+
+    const brInsertresults = YouTube.LiveBroadcasts.insert(lbrresource,'snippet,contentDetails,status');
+    console.log('Insert Broadcast Results:');
+    console.log(brInsertresults);
+    brId = brInsertresults.id;
+
+
+//     const strInsertresults = YouTube.LiveStreams.insert(livestreamres,'id,snippet,cdn,content_details,status');
+// We're going to reuse an existing streamId.
+
+// bind
+bindresult = YouTube.LiveBroadcasts.bind(brId,'snippet,status',{"streamId":'dthestreamid67'});
+// pm is ddXv1Y0arlYPbr0ahRYsBw1648295061824434
 console.log('Bind results:');
 console.log(bindresult);
 // start transmitting video
@@ -139,12 +217,12 @@ function createbroadcastPM() {
     {
   "kind": "youtube#liveBroadcast",
   "snippet": {
-    "channelId": 'UCddXv1Y0arlYPbr0ahRYsBw',
+    "channelId": 'UCthechannelidsBw',
     "title": 'API test PM '+getscheddatetimePM(),
     "description": 'The evening session of TeluguStream, 4:30 pm to 4:30 am.',
     "thumbnails": {
       "default": {
-        "url": "https://i.ytimg.com/vi/sDcbL973Ndw/hqdefault.jpg",
+        "url": "https://i.ytimg.com/vi/F92oOHwJTYo/hqdefault.jpg",
         "width": 366,
         "height": 275
       }
@@ -154,7 +232,7 @@ function createbroadcastPM() {
     
   },
   "status": {
-    "privacyStatus": "public",
+    "privacyStatus": "private",
     "selfDeclaredMadeForKids": "false"
   },
   "contentDetails": {   
@@ -177,9 +255,9 @@ function createbroadcastPM() {
 // We're going to reuse an existing streamId.
 
 // bind
-bindresult = YouTube.LiveBroadcasts.bind(brId,'snippet,status',{"streamId":'id2'});
-// pm is id2
-// am is id1
+bindresult = YouTube.LiveBroadcasts.bind(brId,'snippet,status',{"streamId":'dthestreamid34'});
+// pm is ddXv1Y0arlYPbr0ahRYsBw1648295061824434
+// am is ddXv1Y0arlYPbr0ahRYsBw1710082827760667
 console.log('Bind results:');
 console.log(bindresult);
 // start transmitting video
@@ -200,7 +278,7 @@ function createbroadcastyt() {
     {
   "kind": "youtube#liveBroadcast",
   "snippet": {
-    "channelId": 'UCddXv1Y0arlYPbr0ahRYsBw',
+    "channelId": 'UCthechannelidBw',
     "title": 'API test2',
     "description": 'API test1 description',
     "thumbnails": {
@@ -225,7 +303,7 @@ function createbroadcastyt() {
     "selfDeclaredMadeForKids": "false"
   },
   "contentDetails": {
-   // "boundStreamId": 'id1',
+   // "boundStreamId": '',
     //"boundStreamLastUpdateTimeMs": datetime,
     //  "monitorStream": {
     //    "enableMonitorStream": false
@@ -310,7 +388,7 @@ function createbroadcastyt() {
 // We're going to reuse an existing streamId.
 
 // bind
-bindresult = YouTube.LiveBroadcasts.bind(brId,'snippet,status',{"streamId":'id1'});
+bindresult = YouTube.LiveBroadcasts.bind(brId,'snippet,status',{"streamId":'dthestreamid67'});
 console.log('Bind results:');
 console.log(bindresult);
 // start transmitting video
@@ -331,8 +409,9 @@ console.log(bindresult);
 
 function bindbc() {
   try {
-    //result = YouTube.LiveBroadcasts.bind('aFv6gy2uS58','id,snippet,contentDetails,status','id1');
-    result = YouTube.LiveBroadcasts.bind('aFv6gy2uS58','snippet,status',{"streamId":'id1'});
+    //result = YouTube.LiveBroadcasts.bind('aFv6gy2uS58','id,snippet,contentDetails,status','dthestreamid67');
+// the above does not work due to wrong argument - id should not be given as part of the string in 2nd arg, and 3rd arg should be in {}
+    result = YouTube.LiveBroadcasts.bind('aFv6gy2uS58','snippet,status',{"streamId":'dthestreamid67'});
     console.log(result);
        
 
