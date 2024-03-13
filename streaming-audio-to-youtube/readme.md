@@ -11,3 +11,9 @@ We want the stream to be archived. For this, youtube requires the stream to be l
 3. start the streaming using ffmpeg
 4. Before 12 hours are up, stop the streaming from ffmpeg - within 60 sec, the broadcast auto-stops and gets archived.
 5. Start again with creating a broadcast.
+
+## Our process:
+1. Create two stream ids using studio.youtube.com, schedule them for the future, and delete the scheduled broadcast after getting the stream ids.
+2. Use those two created stream ids in our google apps script, using the checklivestreams() to get the streamids and stream names. The stream names are what are used as stream keys for ffmpeg on our source server.
+3. Schedule the createbroadcastAM() function for 3am-4am IST slot daily, and similarly createbroadcastPM() for 3pm-4pm IST slot daily using Google Apps Scripts time-based triggers.
+4. Create cron jobs on our source server to run two different copies of the str2ytc.sh script, maybe named am and pm respectively, with the two different stream keys, starting at 4.29 am IST and 4.29 pm IST. (In case exactly 12 hours long stream can't be archived by youtube, we need to create another script with <pre>killall ffmpeg</pre> to run a few minutes before.)
