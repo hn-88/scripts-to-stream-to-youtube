@@ -20,6 +20,8 @@ We want the stream to be archived. For this, youtube requires the stream to be l
 
 ## Authentication issues and workaround:
 https://stackoverflow.com/questions/46520366/youtube-apps-script-api-only-runnable-by-accounts-without-a-youtube-channel?noredirect=1&lq=1
+
 https://hawksey.info/blog/2017/09/identity-crisis-using-the-youtube-api-with-google-apps-script-and-scheduling-live-broadcasts-from-google-sheets/
+
 Implemented with a Google Sheet to store the refresh token at https://github.com/hn-88/scripts-to-stream-to-youtube/blob/main/streaming-audio-to-youtube/updateytoauth.gs
 
