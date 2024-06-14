@@ -1,5 +1,5 @@
 // From https://hawksey.info/blog/2017/09/identity-crisis-using-the-youtube-api-with-google-apps-script-and-scheduling-live-broadcasts-from-google-sheets/
-// modified to store the refresh token in a Google Sheet.
+// modified for our use.
 
 //we are going to use three libraries:
 
