@@ -1,5 +1,5 @@
 // From https://hawksey.info/blog/2017/09/identity-crisis-using-the-youtube-api-with-google-apps-script-and-scheduling-live-broadcasts-from-google-sheets/
-// modified for our use.
+// not yet modified for our use - manual creation preferred.
 
 //we are going to use three libraries:
 
@@ -28,6 +28,9 @@ Enabling YouTube Data API
     6. Click the Create credentials, select OAuth Client ID then Web application
     7. Enter a name as required and in the Authorised JavaScript origins enter https://script.google.com
     8. In Script Editor click Run > Run function > logRedirectUri. From the View > Logs copy the url into the Authorised redirect URIs field API console, click Create
+**************
+2024 - Please note that the consent screen needs to be set as 'Public' for this to work. 'Testing' or 'Internal' don't work.
+**************
     
 Create credentials
     9. In the Script Editor open File > Project properties and in the Script properties tab and new rows for client_id and client_secret copying the values from the API console
